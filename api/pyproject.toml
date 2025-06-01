@@ -1,0 +1,13 @@
+[project]
+name = "kazkazi-chat-api"
+version = "0.1.0"
+description = "API for the Kazkazi chat"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.115.12",
+    "passlib[bcrypt]>=1.7.4",
+    "python-jose[cryptography]>=3.5.0",
+    "sqlalchemy>=2.0.41",
+    "uvicorn>=0.34.3",
+]
