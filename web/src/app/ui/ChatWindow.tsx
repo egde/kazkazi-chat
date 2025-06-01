@@ -9,9 +9,8 @@ const MarkdownRenderer = dynamic(() => import('./MarkdownRenderer'), { ssr: fals
 const MyChatMessage = memo(function ChatMessage({ content, role, timestamp }: { content: string; role: string; timestamp: string }) {
   return (
     <div
-      className={`flex items-start space-x-2 rounded-md p-4 whitespace-pre-wrap ${
-        role === 'user' ? 'bg-yellow-100 flex-row-reverse text-right' : 'bg-gray-100 text-left'
-      }`}
+      className={`flex items-start space-x-2 rounded-md p-4 whitespace-pre-wrap ${role === 'user' ? 'bg-yellow-100 flex-row-reverse text-right' : 'bg-gray-100 text-left'
+        }`}
     >
       <div className="flex-shrink-0">
         <div className="w-8 h-8 text-xl">{role === 'user' ? '🧑' : '🤖'}</div>
@@ -81,13 +80,13 @@ export default function ChatWindow() {
       ]);
       setInput('');
     } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.error('Failed to get a response:', err.message);
-          setError(`Failed to get a response: ${err.message}`);
-        } else {
-          console.error('An unknown error occurred:', err);
-          setError('An unknown error occurred while getting a response.');
-        }
+      if (err instanceof Error) {
+        console.error('Failed to get a response:', err.message);
+        setError(`Failed to get a response: ${err.message}`);
+      } else {
+        console.error('An unknown error occurred:', err);
+        setError('An unknown error occurred while getting a response.');
+      }
     } finally {
       setLoading(false);
     }
@@ -108,8 +107,8 @@ export default function ChatWindow() {
   };;
 
   return (
-    <div className="p-4  mx-auto">
-      <div className="space-y-6">
+    <div className="p-4 max-w-6xl mx-auto h-screen flex flex-col">
+      <div className="space-y-4 flex-9 overflow-auto pr-1">
         {messages.map((msg, idx) => (
           <MyChatMessage
             key={idx}
@@ -122,29 +121,31 @@ export default function ChatWindow() {
         <div ref={bottomRef} />
       </div>
 
-      <textarea
-        ref={inputRef}
-        className="w-full mt-4 p-2 border rounded-md"
-        rows={4}
-        placeholder="Write your prompt using Markdown... (Ctrl+Enter to send)"
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
-      <div className="flex gap-2 mt-2">
-        <button
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-          onClick={handleSend}
-          disabled={loading}
-        >
-          {loading ? 'Sending...' : 'Send'}
-        </button>
-        <button
-          className="px-4 py-2 bg-gray-400 text-white rounded"
-          onClick={handleReset}
-        >
-          Reset
-        </button>
+      <div className="mt-4 flex-2 gap-2">
+        <textarea
+          ref={inputRef}
+          className="w-full p-2 border rounded-md"
+          rows={4}
+          placeholder="Write your prompt using Markdown... (Ctrl+Enter to send)"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="flex gap-2">
+          <button
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+            onClick={handleSend}
+            disabled={loading}
+          >
+            {loading ? 'Sending...' : 'Send'}
+          </button>
+          <button
+            className="px-4 py-2 bg-gray-400 text-white rounded"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+        </div>
       </div>
     </div>
   );
