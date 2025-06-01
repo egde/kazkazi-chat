@@ -1,0 +1,50 @@
+api/chat.db
+# ignore any __pycache__ directories
+__pycache__/
+# ignore any .pyc files
+*.pyc
+# ignore any .pyo files
+*.pyo
+# ignore any .pyd files
+*.pyd
+# ignore any .pdb files
+*.pdb
+# ignore any .egg-info directories
+*.egg-info/
+# ignore any .eggs directories
+.eggs/
+# ignore any .DS_Store files
+.DS_Store
+# ignore any .idea directories
+.idea/
+# ignore any .vscode directories
+.vscode/
+# ignore any .mypy_cache directories
+.mypy_cache/
+# ignore any .pytest_cache directories
+.pytest_cache/
+# ignore any .coverage files
+.coverage
+# ignore any .tox directories
+.tox/
+# ignore any .hypothesis directories
+.hypothesis/
+# ignore any .cache directories
+.cache/
+# ignore any .ipynb_checkpoints directories
+.ipynb_checkpoints/
+# ignore any .env files
+.env
+# ignore any .venv directories
+.venv/
+# ignore any .virtualenv directories
+.virtualenv/
+# ignore any .pytest directories
+.pytest/
+# ignore any .mypy directories
+.mypy/
+
+.next/
+# ignore node_modules directories
+node_modules/
+
