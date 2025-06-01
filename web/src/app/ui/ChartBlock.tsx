@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Bar, Line, Pie, Scatter } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,7 +11,7 @@ import {
   PointElement,
   ArcElement,
   Tooltip,
-  Legend,
+  Legend
 } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Tooltip, Legend);
@@ -28,6 +28,8 @@ export default function ChartBlock({ code }: { code: string }) {
         return <Line data={data} options={options} />;
       case 'pie':
         return <Pie data={data} options={options} />;
+      case 'scatter':
+        return <Scatter data={data} options={options} />;
       default:
         return <pre>Unsupported chart type: {type}</pre>;
     }

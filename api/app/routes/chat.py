@@ -84,6 +84,12 @@ You are a helpful assistant. Please respond to the user's query.
 User's query: {prompt}
 Chat history:
 {''.join([f"{msg.role}: {msg.content}\n" for msg in history])}
+
+If you are unsre about the answer, please ask the user for clarification.
+
+You can provide charts inline using the code element with the language set to "chart". The content needs to be valid JSON that will be rendered with chart.js. There is no need to explain the chart.js code. Don't use any callbacks or other functions, just return the JSON data.
+
+Show the data in a table if it is relevant to the user's query.
 """
 
 
