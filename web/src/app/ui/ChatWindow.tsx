@@ -30,6 +30,7 @@ export default function ChatWindow() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     async function init() {
@@ -55,8 +56,16 @@ export default function ChatWindow() {
   }, []);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const timeout = setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 1000); // delay slightly to wait for charts/code rendering
+
+    return () => clearTimeout(timeout);
   }, [messages]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -99,8 +108,8 @@ export default function ChatWindow() {
   };;
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <div className="space-y-4">
+    <div className="p-4  mx-auto">
+      <div className="space-y-6">
         {messages.map((msg, idx) => (
           <MyChatMessage
             key={idx}
@@ -114,6 +123,7 @@ export default function ChatWindow() {
       </div>
 
       <textarea
+        ref={inputRef}
         className="w-full mt-4 p-2 border rounded-md"
         rows={4}
         placeholder="Write your prompt using Markdown... (Ctrl+Enter to send)"

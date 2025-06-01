@@ -18,7 +18,7 @@ export default function RootLayout({
         className="bg-gray-100 leading-normal tracking-normal antialiased"
       >
         <Header></Header>
-        <div className="container w-full md:max-w-3xl mx-auto pt-20 -z-30" style={{ font: "Georgia, sans-serif" }}>
+        <div className="container w-full mx-auto pt-20 -z-30" style={{ font: "Georgia, sans-serif" }}>
           {children}
         </div>
       </body>

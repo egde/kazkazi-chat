@@ -3,6 +3,34 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth
 from app.routes import chat
 from app.db import Base, engine
+from logging.config import dictConfig
+
+# Define the logging configuration
+log_config = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "default",
+            "stream": "ext://sys.stdout",
+        },
+    },
+    "loggers": {
+        "app": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
+    },
+    "root": {"handlers": ["console"], "level": "DEBUG"},
+}
+
+# Apply the configuration
+dictConfig(log_config)
 
 app = FastAPI()
 
