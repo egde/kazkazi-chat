@@ -23,13 +23,13 @@ export default function ChartBlock({ code }: { code: string }) {
 
     switch (type) {
       case 'bar':
-        return <Bar data={data} options={options} />;
+        return <Bar data={data} options={options} height="300px"i />;
       case 'line':
-        return <Line data={data} options={options} />;
+        return <Line data={data} options={options} height="300px"/>;
       case 'pie':
-        return <Pie data={data} options={options} />;
+        return <Pie data={data} options={options} height="300px"/>;
       case 'scatter':
-        return <Scatter data={data} options={options} />;
+        return <Scatter data={data} options={options} height="300px"/>;
       default:
         return <pre>Unsupported chart type: {type}</pre>;
     }
