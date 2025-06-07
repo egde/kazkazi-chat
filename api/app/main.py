@@ -4,6 +4,7 @@ from app.routes import auth
 from app.routes import chat
 from app.db import Base, engine
 from logging.config import dictConfig
+import os
 
 # Define the logging configuration
 log_config = {
@@ -32,7 +33,15 @@ log_config = {
 # Apply the configuration
 dictConfig(log_config)
 
-app = FastAPI()
+# Determine if we should use a prefix (e.g., in production)
+API_PREFIX = "/api" if os.getenv("KAZKAZI_ENV") == "production" else ""
+
+# Set docs and OpenAPI URLs to be under /api in production
+openapi_url = f"{API_PREFIX}/openapi.json" if API_PREFIX else "/openapi.json"
+docs_url = f"{API_PREFIX}/docs" if API_PREFIX else "/docs"
+redoc_url = f"{API_PREFIX}/redoc" if API_PREFIX else "/redoc"
+
+app = FastAPI(openapi_url=openapi_url, docs_url=docs_url, redoc_url=redoc_url)
 
 app.add_middleware(
     CORSMiddleware,
@@ -44,5 +53,5 @@ app.add_middleware(
 
 Base.metadata.create_all(bind=engine)
 
-app.include_router(auth.router)
-app.include_router(chat.router)
+app.include_router(auth.router, prefix=API_PREFIX)
+app.include_router(chat.router, prefix=API_PREFIX)
