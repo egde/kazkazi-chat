@@ -3,9 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth
 from app.routes import chat
 from app.db import Base, engine
-import logging
 from logging.config import dictConfig
-import os
 
 # Define the logging configuration
 log_config = {
