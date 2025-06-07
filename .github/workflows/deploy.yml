@@ -43,4 +43,4 @@ jobs:
             docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password ${{ secrets.GHCR_TOKEN }}
             cd ${{ secrets.EC2_PROJECT_PATH }}
             docker compose pull
-            docker compose up -d
+            docker compose up --detach
