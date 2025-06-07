@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { JSX } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import CodeBlock from './CodeBlock';
@@ -19,7 +19,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code({ node, inline, className, children, ...props }) {
+          code({ inline,  className, children, ...props }: React.ComponentProps<'code'> & { inline?: boolean }) {
             const match = /language-(\w+)/.exec(className || '');
             const language = match?.[1] || '';
             const text = String(children).trim();
@@ -33,7 +33,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               return <CodeBlock language={language} code={text} />;
             }
 
-            return <code className={className} {...props}>{children}</code>;
+            return <div><h1>INLINE</h1><code className={className} {...props}>{children}</code></div>;
           },
         }}
       >

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, memo } from 'react';
 import { login, sendPrompt, getHistory, verifySession, ChatMessage } from '@/lib/api';
 import dynamic from 'next/dynamic';
+import useAutoScroll from '../hooks/useAutoScroll';
 
 const MarkdownRenderer = dynamic(() => import('./MarkdownRenderer'), { ssr: false });
 
@@ -31,6 +32,8 @@ export default function ChatWindow() {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
+  const scrollContentRef = useAutoScroll(true)
+
   useEffect(() => {
     async function init() {
       try {
@@ -52,18 +55,6 @@ export default function ChatWindow() {
     }
 
     init();
-  }, []);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }, 1000); // delay slightly to wait for charts/code rendering
-
-    return () => clearTimeout(timeout);
-  }, [messages]);
-
-  useEffect(() => {
-    inputRef.current?.focus();
   }, []);
 
   const handleSend = async () => {
@@ -108,20 +99,20 @@ export default function ChatWindow() {
 
   return (
     <div className="p-4 max-w-6xl mx-auto h-screen flex flex-col">
-      <div className="space-y-4 flex-9 overflow-auto pr-1">
+      <div ref={scrollContentRef} className='grow space-y-4'>
         {messages.map((msg, idx) => (
           <MyChatMessage
             key={idx}
             content={msg.content}
             role={msg.role}
-            timestamp={msg.timestamp ? msg.timestamp : new Date().toLocaleTimeString()}
+            timestamp={msg.timestamp ? msg.timestamp : new Date().toLocaleDateString()}
           />
         ))}
         {error && <div className="text-red-500">Error: {error}</div>}
         <div ref={bottomRef} />
       </div>
 
-      <div className="mt-4 flex-2 gap-2">
+      <div className="sticky bottom-0 shrink-0 bg-white py-4'">
         <textarea
           ref={inputRef}
           className="w-full p-2 border rounded-md"
