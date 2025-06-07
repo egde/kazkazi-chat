@@ -1,0 +1,46 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+
+      - name: Build and Push Frontend
+        run: |
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest ./frontend
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest
+
+      - name: Build and Push Backend
+        run: |
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-api:latest ./backend
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-api:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password ${{ secrets.GHCR_TOKEN }}
+            cd ${{ secrets.EC2_PROJECT_PATH }}
+            docker-compose pull
+            docker-compose up -d
