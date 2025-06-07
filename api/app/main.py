@@ -1,3 +1,4 @@
+import logging
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,7 +33,9 @@ log_config = {
 
 # Apply the configuration
 dictConfig(log_config)
-
+logger = logging.getLogger(__name__)
+logger.info("Logging is configured.")
+logger.info("Starting Kazkazi Chat API... with root path: %s", os.getenv("ENV"))
 app = FastAPI(root_path="/api" if os.getenv("ENV") == "production" else "", 
               title="Kazkazi Chat API", 
               version="1.0.0")
