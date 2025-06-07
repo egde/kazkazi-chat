@@ -1,6 +1,6 @@
 'use client';
 
-import React, { JSX } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import CodeBlock from './CodeBlock';
@@ -11,7 +11,6 @@ interface MarkdownRendererProps {
 }
 
 export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
-  const chartBlocks: { index: number; chart: JSX.Element }[] = [];
   let chartIndex = 0;
 
   return (

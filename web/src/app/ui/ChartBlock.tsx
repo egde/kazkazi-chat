@@ -23,7 +23,7 @@ export default function ChartBlock({ code }: { code: string }) {
 
     switch (type) {
       case 'bar':
-        return <Bar data={data} options={options} height="300px"i />;
+        return <Bar data={data} options={options} height="300px"/>;
       case 'line':
         return <Line data={data} options={options} height="300px"/>;
       case 'pie':
