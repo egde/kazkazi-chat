@@ -1,6 +1,6 @@
 // lib/api.ts
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8000';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
 export async function login(): Promise<void> {
   console.log(`API_BASE in use: ${API_BASE}`);
