@@ -1,4 +1,4 @@
-import ChatWindow from "@/app/ui/ChatWindow"
+import ChatWindow from "./ui/ChatWindow";
 
 export default async function Home() {
 

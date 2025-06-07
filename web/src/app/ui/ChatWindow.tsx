@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, memo } from 'react';
-import { login, sendPrompt, getHistory, verifySession, ChatMessage } from '@/lib/api';
+import { login, sendPrompt, getHistory, verifySession, ChatMessage } from '../../lib/api';
 import dynamic from 'next/dynamic';
 import useAutoScroll from '../hooks/useAutoScroll';
 
