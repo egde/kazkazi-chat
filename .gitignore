@@ -49,3 +49,4 @@ __pycache__/
 node_modules/
 
 kazkazi-chat.pem
+web/.env.local
