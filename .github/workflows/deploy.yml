@@ -20,12 +20,12 @@ jobs:
 
       - name: Build and Push Frontend
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest ./frontend
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest ./web
           docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest
 
       - name: Build and Push Backend
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-api:latest ./backend
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-api:latest ./api
           docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-api:latest
 
   deploy:
