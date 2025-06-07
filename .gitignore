@@ -48,3 +48,4 @@ __pycache__/
 # ignore node_modules directories
 node_modules/
 
+kazkazi-chat.pem
