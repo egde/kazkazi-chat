@@ -1,14 +1,16 @@
 // lib/api.ts
 
+const API_BASE = process.env.API_BASE || 'http://localhost:8000';
+
 export async function login(): Promise<void> {
-  await fetch('http://localhost:8000/auth/login', {
+  await fetch(`${API_BASE}/auth/login`, {
     method: 'POST',
     credentials: 'include',
   });
 }
 
 export async function verifySession(): Promise<boolean> {
-  const res = await fetch('http://localhost:8000/auth/verify', {
+  const res = await fetch(`${API_BASE}/auth/verify`, {
     credentials: 'include',
   });
   return res.ok;
@@ -21,7 +23,7 @@ export interface ChatMessage {
 }
 
 export async function getHistory(): Promise<ChatMessage[]> {
-  const res = await fetch('http://localhost:8000/history', {
+  const res = await fetch(`${API_BASE}/history`, {
     credentials: 'include',
   });
 
@@ -44,7 +46,7 @@ export async function getHistory(): Promise<ChatMessage[]> {
 }
 
 export async function sendPrompt(prompt: string): Promise<string> {
-  const res = await fetch('http://localhost:8000/chat', {
+  const res = await fetch(`${API_BASE}/chat`, {
     method: 'POST',
     credentials: 'include',
     headers: {
