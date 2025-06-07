@@ -36,12 +36,7 @@ dictConfig(log_config)
 # Determine if we should use a prefix (e.g., in production)
 API_PREFIX = "/api" if os.getenv("KAZKAZI_ENV") == "production" else ""
 
-# Set docs and OpenAPI URLs to be under /api in production
-openapi_url = f"{API_PREFIX}/openapi.json" if API_PREFIX else "/openapi.json"
-docs_url = f"{API_PREFIX}/docs" if API_PREFIX else "/docs"
-redoc_url = f"{API_PREFIX}/redoc" if API_PREFIX else "/redoc"
-
-app = FastAPI(openapi_url=openapi_url, docs_url=docs_url, redoc_url=redoc_url)
+app = FastAPI(root_path=API_PREFIX)
 
 app.add_middleware(
     CORSMiddleware,
