@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth
 from app.routes import chat
 from app.db import Base, engine
+import logging
 from logging.config import dictConfig
 import os
 
@@ -33,10 +34,7 @@ log_config = {
 # Apply the configuration
 dictConfig(log_config)
 
-# Determine if we should use a prefix (e.g., in production)
-API_PREFIX = "/api" if os.getenv("KAZKAZI_ENV") == "production" else ""
-
-app = FastAPI(root_path=API_PREFIX)
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -48,5 +46,5 @@ app.add_middleware(
 
 Base.metadata.create_all(bind=engine)
 
-app.include_router(auth.router, prefix=API_PREFIX)
-app.include_router(chat.router, prefix=API_PREFIX)
+app.include_router(auth.router)
+app.include_router(chat.router)
