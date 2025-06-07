@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth
@@ -32,7 +33,9 @@ log_config = {
 # Apply the configuration
 dictConfig(log_config)
 
-app = FastAPI()
+app = FastAPI(root_path="/api" if os.getenv("ENV") == "production" else "", 
+              title="Kazkazi Chat API", 
+              version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
