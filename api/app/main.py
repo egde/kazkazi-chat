@@ -37,6 +37,8 @@ logger = logging.getLogger(__name__)
 logger.info("Logging is configured.")
 logger.info("Starting Kazkazi Chat API... with root path: %s", os.getenv("ENV"))
 app = FastAPI(root_path="/api" if os.getenv("ENV") == "production" else "", 
+              docs_url="/docs",
+              openapi_url="/api/openapi.json" if os.getenv("ENV") == "production" else "/openapi.json",
               title="Kazkazi Chat API", 
               version="1.0.0")
 
