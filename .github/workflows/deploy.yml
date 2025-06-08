@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and Push Frontend
         run: |
-          docker build --build-arg NODE_ENV=production -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest ./web
+          docker build --build-arg -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest ./web
           docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest
 
       - name: Build and Push Backend
