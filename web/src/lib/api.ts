@@ -10,7 +10,7 @@ export async function login(): Promise<void> {
 }
 
 export async function verifySession(): Promise<boolean> {
-  console.log(`API_BASE in use: ${API_BASE}`);
+
   const res = await fetch(`${API_BASE}/auth/verify`, {
     credentials: 'include',
   });
