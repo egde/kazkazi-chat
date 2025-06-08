@@ -57,6 +57,20 @@ jobs:
           script: |
             docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password ${{ secrets.GHCR_TOKEN }}
             cd ${{ secrets.EC2_PROJECT_PATH }}
+
+            echo "NODE_ENV=production" > .env.production
+            echo "NEXT_PUBLIC_API_BASE=${{ env.API_BASE }}" >> .env.production
+            echo "AUTH0_SECRET=${{ secrets.AUTH0_SECRET }}" >> .env.production
+            echo "APP_BASE_URL=${{ env.APP_BASE_URL }}" >> .env.production
+            echo "AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }}" >> .env.production
+            echo "AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}" >> .env.production
+            echo "AUTH0_CLIENT_SECRET=${{ secrets.AUTH0_CLIENT_SECRET }}" >> .env.production
+            echo "AUTH0_AUDIENCE=${{ env.AUTH0_AUDIENCE }}" >> .env.production
+            echo "AUTH0_SCOPE=${{ env.AUTH0_SCOPE }}" >> .env.production
+
+            echo "OPENROUTER_KEY=${{ secrets.OPENROUTER_KEY }}" >> .env.production
+            echo "ENV=production" >> .env.production
+
             docker-compose pull
             docker-compose down
             docker-compose up -d

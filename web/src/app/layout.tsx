@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./ui/Header";
-import Footer from "./ui/Footer";
+import Header from "@/app/ui/Header";
+import Footer from "@/app/ui/Footer";
 
 export const metadata: Metadata = {
   title: "KAZKAZI CHAT",
