@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../ui/Button";
 
 const Logout = () => {
     return (
@@ -7,12 +8,7 @@ const Logout = () => {
             <p className="text-lg mb-8 text-center">
                 We appreciate your time. Hope to see you again soon.
             </p>
-            <a
-                href="/#"
-                className="px-8 py-3 text-lg rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-            >
-                Go to Login
-            </a>
+            <Button href='/' size="large" variant="primary">Go to Login</Button>
         </div>
     );
 };
