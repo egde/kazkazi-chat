@@ -19,7 +19,7 @@ export default function RootLayout({
         className="leading-normal tracking-normal antialiased"
       >
         <Header></Header>
-        <div className="container w-full mx-auto pt-20 -z-30" style={{ font: "Georgia, sans-serif" }}>
+        <div className="w-full mx-auto pt-20 -z-30" style={{ font: "Georgia, sans-serif" }}>
           {children}
         </div>
         <Footer></Footer>

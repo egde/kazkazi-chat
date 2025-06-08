@@ -98,7 +98,7 @@ export default function ChatWindow() {
   };;
 
   return (
-    <div className="p-4 max-w-6xl mx-auto flex flex-col">
+    <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-full lg:max-w-6xl flex flex-col">
       <div ref={scrollContentRef} className='grow space-y-4'>
         {messages.map((msg, idx) => (
           <MyChatMessage

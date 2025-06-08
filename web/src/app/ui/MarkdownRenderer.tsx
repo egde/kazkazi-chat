@@ -14,7 +14,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   let chartIndex = 0;
 
   return (
-    <div className="space-y-4 max-w-5xl">
+    <div className="space-y-4 mx-auto px-4 sm:px-6 lg:px-8 max-w-full lg:max-w-5xl">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
