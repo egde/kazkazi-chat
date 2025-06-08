@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, memo } from 'react';
-import { login, sendPrompt, getHistory, verifySession, ChatMessage } from '../../lib/api';
+import { sendPrompt, getHistory, verifySession, ChatMessage } from '../../lib/api';
 import dynamic from 'next/dynamic';
 import useAutoScroll from '../hooks/useAutoScroll';
 
@@ -39,7 +39,9 @@ export default function ChatWindow() {
       try {
         const valid = await verifySession();
         if (!valid) {
-          await login();
+          console.error('Session is invalid, redirecting to login');
+          setError('Session is invalid, please log in again.');
+          return;
         }
         const history = await getHistory();
         setMessages(history);
@@ -94,7 +96,6 @@ export default function ChatWindow() {
     setMessages([]);
     setInput('');
     setError(null);
-    await login(); // re-login to start a new session
   };;
 
   return (

@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Security
 from sqlalchemy.orm import Session as DBSession
 from app.db import SessionLocal
 from app.models import Session, Message
 from app.schemas import ChatMessage, ChatRequest
-from app.auth import get_user_id_from_token
+from app.auth import auth
 import os
 from openai import OpenAI
 import logging
@@ -21,11 +21,8 @@ def get_db():
         db.close()
 
 
-@router.get("/history", response_model=list[ChatMessage])
-def get_history(
-    db: DBSession = Depends(get_db), user_id: str = Depends(get_user_id_from_token)
-):
-    logger.info(f"Fetching chat history for user_id: {user_id}")
+def _get_history(db: DBSession, user_id: str) -> list[ChatMessage]:
+    """Fetch chat history for a given user."""
     session = db.query(Session).filter(Session.user_id == user_id).first()
     if not session:
         return []
@@ -44,6 +41,16 @@ def get_history(
         )
         for m in messages
     ]
+
+
+@router.get("/history", response_model=list[ChatMessage])
+def get_history(
+    db: DBSession = Depends(get_db), 
+    auth_result: str = Security(auth.verify)
+):
+    user_id = auth_result.get("sub")
+    logger.info(f"Fetching chat history for user_id: {user_id}")
+    return _get_history(db, user_id)
 
 
 def prompt_llm_markdown(prompt: str) -> str:
@@ -98,8 +105,9 @@ Show the data in a table if it is relevant to the user's query.
 def chat(
     req: ChatRequest,
     db: DBSession = Depends(get_db),
-    user_id: str = Depends(get_user_id_from_token),
+    auth_result: str = Security(auth.verify)
 ):
+    user_id = auth_result.get("sub")
     # Get or create user session
     session = db.query(Session).filter(Session.user_id == user_id).first()
     if not session:
@@ -112,7 +120,7 @@ def chat(
     user_msg = Message(session_id=session.id, role="user", content=req.prompt)
     db.add(user_msg)
 
-    history = get_history(db, user_id)
+    history = _get_history(db, user_id)
 
     # Generate assistant response
     markdown = prompt_llm_markdown(
