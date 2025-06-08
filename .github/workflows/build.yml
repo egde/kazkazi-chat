@@ -1,0 +1,41 @@
+name: Build Only
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  build-web:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+
+      - name: Build web
+        run: |
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-web:latest ./web
+
+  build-api:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+
+      - name: Build api
+        run: |
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/kazkazi-chat-api:latest ./api
