@@ -23,43 +23,58 @@ const variantClasses: Record<ButtonVariant, string> = {
     normal: "bg-white text-gray-900 border border-gray-300 hover:bg-gray-100",
 };
 
-export const Button: React.FC<ButtonProps> = ({
-    size = "medium",
-    variant = "normal",
-    onClick,
-    href,
-    children,
-    ...rest
-}) => {
-    const className = `
-        inline-flex items-center justify-center rounded
-        ${sizeClasses[size]}
-        ${variantClasses[variant]}
-        transition-colors duration-150
-        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-        disabled:opacity-50 disabled:cursor-not-allowed
-    `;
+export const Button = React.forwardRef<
+    HTMLButtonElement | HTMLAnchorElement,
+    ButtonProps
+>(
+    (
+        {
+            size = "medium",
+            variant = "normal",
+            onClick,
+            href,
+            className: customClassName = "",
+            children,
+            ...rest
+        },
+        ref
+    ) => {
+        const className = `
+            inline-flex items-center justify-center rounded
+            ${sizeClasses[size]}
+            ${variantClasses[variant]}
+            transition-colors duration-150
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+            disabled:opacity-50 disabled:cursor-not-allowed
+            ${customClassName}
+        `;
 
-    if (href) {
+        if (href) {
+            return (
+                <a
+                    href={href}
+                    className={className}
+                    ref={ref as React.Ref<HTMLAnchorElement>}
+                    role="button"
+                    tabIndex={0}
+                    {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+                >
+                    {children}
+                </a>
+            );
+        }
+
         return (
-            <a
-                href={href}
+            <button
+                type={rest.type || "button"}
                 className={className}
+                onClick={onClick}
+                ref={ref as React.Ref<HTMLButtonElement>}
                 {...rest}
             >
                 {children}
-            </a>
+            </button>
         );
     }
-
-    return (
-        <button
-            type="button"
-            className={className}
-            onClick={onClick}
-            {...rest}
-        >
-            {children}
-        </button>
-    );
-};
+);
+Button.displayName = "Button";

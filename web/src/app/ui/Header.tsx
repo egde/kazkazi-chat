@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ProfileServer from "./Profile";
 
 export default function Header() {
@@ -10,9 +11,9 @@ export default function Header() {
                 <div className="w-full flex flex-wrap items-center justify-between mt-0 py-3 px-4">
 
                     <div className="pr-4">
-                        <a className="text-gray-900 no-underline hover:no-underline font-extrabold text-xl" href="/">
+                        <Link className="text-gray-900 no-underline hover:no-underline font-extrabold text-xl" href="/">
                             Kazkazi Chat
-                        </a>
+                        </Link>
                     </div>
                     <ProfileServer></ProfileServer>                    
                 </div>
