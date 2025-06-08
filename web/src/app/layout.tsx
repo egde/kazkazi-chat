@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className="bg-gray-100 leading-normal tracking-normal antialiased"
+        className="leading-normal tracking-normal antialiased"
       >
         <Header></Header>
         <div className="container w-full mx-auto pt-20 -z-30" style={{ font: "Georgia, sans-serif" }}>
