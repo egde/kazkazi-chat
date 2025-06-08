@@ -33,9 +33,13 @@ log_config = {
 # Apply the configuration
 dictConfig(log_config)
 
-app = FastAPI(root_path="/api" if os.getenv("ENV") == "production" else "", 
-              title="Kazkazi Chat API", 
-              version="1.0.0")
+
+
+app = FastAPI(
+    root_path="/api" if os.getenv("ENV") == "production" else "",
+    title="Kazkazi Chat API",
+    version="1.0.0",
+)
 
 app.add_middleware(
     CORSMiddleware,

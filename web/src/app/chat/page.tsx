@@ -11,7 +11,7 @@ async function ChatPage() {
   }
 
   return (
-    <div>
+    <div className="mb-4">
       <ChatWindow />
     </div>
   );
