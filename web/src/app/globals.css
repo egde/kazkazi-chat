@@ -5,6 +5,17 @@
   --foreground: #171717;
 }
 
+.inline-code {
+  background-color: #f0f0f0; /* Light gray background */
+  padding: 0.2em 0.4em;     /* Some padding around the text */
+  border-radius: 3px;       /* Slightly rounded corners */
+  font-family: monospace;   /* Ensure monospace font */
+  font-size: 0.9em;         /* Slightly smaller than surrounding text */
+  color: #c92323;           /* A distinct color, e.g., a reddish tone */
+  white-space: nowrap;      /* Prevents line breaks within the code snippet */
+  word-break: break-all;     /* Allows long unbroken code to break */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

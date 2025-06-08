@@ -14,25 +14,24 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   let chartIndex = 0;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-5xl">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code({ inline,  className, children, ...props }: React.ComponentProps<'code'> & { inline?: boolean }) {
+          code({ className, children, ...props }: React.ComponentProps<'code'>) {
             const match = /language-(\w+)/.exec(className || '');
-            const language = match?.[1] || '';
-            const text = String(children).trim();
 
-            if (!inline && language === 'chart') {
-              const idx = chartIndex++;
-              return <ChartBlock key={idx} code={text} />
-            }
+            if (match) {
+              const language = match?.[1] || '';
+              const text = String(children).trim();
 
-            if (!inline) {
+              if (language === 'chart') {
+                const idx = chartIndex++;
+                return <ChartBlock key={idx} code={text} />
+              }
               return <CodeBlock language={language} code={text} />;
             }
-
-            return <div><h1>INLINE</h1><code className={className} {...props}>{children}</code></div>;
+            return <code className={`inline-code ${className}`} {...props}>{children}</code>;
           },
         }}
       >
